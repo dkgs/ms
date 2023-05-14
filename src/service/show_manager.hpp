@@ -36,13 +36,13 @@ namespace service
         /**
          * @brief Books a set of seats
          * 
-         * @param seats list of seats to be booked
+         * @param seats list of seat ids to be booked
          * @return true if all the seats have been booked
          * @return false if at least one of the seats are no more available
          */
         virtual
         bool
-        book_seats(const std::vector<model::seat> & seats) = 0;
+        book_seats(const std::vector<std::string> & seat_ids) = 0;
 
     };
 
