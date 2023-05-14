@@ -90,6 +90,15 @@ SCENARIO("classic usage of the theatre manager")
                 REQUIRE( movies.size() == 0 );
             }
         }
+        WHEN("we add a show")
+        {
+            REQUIRE( tm.add_show_manager(std::make_shared<show_manager_mock>("movie1")) );
+            THEN("it exists")
+            {
+                auto sm = tm.get_show_manager("movie1");
+                REQUIRE( sm.has_value() );
+            }
+        }
     }
 
 }
