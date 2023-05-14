@@ -23,17 +23,6 @@ namespace service
         virtual
         const std::string &
         get_name() const = 0;
-
-        /**
-         * @brief Add a new show manager
-         * 
-         * @param show_manager 
-         * @return true if the show is well added, false if it already exists
-         */
-        virtual
-        bool
-        add_show_manager(std::shared_ptr<show_manager> show_manager) = 0;
-
         /**
          * @brief Returns all movies that are played by this theater
          * 

@@ -21,7 +21,7 @@ struct theater_manager_mock : public theater_manager
     }
 
     bool
-    add_show_manager(std::shared_ptr<show_manager>) override
+    add_show_manager(std::shared_ptr<show_manager>)
     {
         return false;
     }
