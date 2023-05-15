@@ -7,6 +7,8 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+include_directories(${CMAKE_SOURCE_DIR}/src)
+
 add_library(ms_lib STATIC
         ${CMAKE_SOURCE_DIR}/src/service/booking_service_impl.cpp
         ${CMAKE_SOURCE_DIR}/src/service/show_manager_impl.cpp
