@@ -31,8 +31,8 @@
 *.out
 *.app
 
-# Build folder
-build/*
+# Build folders
+build*
 
 # VSCode files
 .vscode/*
