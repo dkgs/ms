@@ -1,27 +1,32 @@
 #pragma once
 
+#include "responses.hpp"
+
 #include <boost/algorithm/string.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/url/decode_view.hpp>
 #include <variant>
 
-#include <iostream>
-
 namespace api
 {
 #if __cpp_concepts
     template<typename T>
-    concept RequestHandlerConcept = requires(T & t)
+    concept ResponseSerializerConcept = requires(T & t, const api_response & res)
     {
-        t.can_handle();
-        t.handle();
+        { t(res) } -> std::same_as<boost::beast::http::response<boost::beast::http::string_body>>;
+    };
+
+    template<typename T>
+    concept RequestHandlerConcept = requires(T & t, const std::vector<std::string> & route_split, const boost::beast::http::request<boost::beast::http::string_body> & request)
+    {
+        { t.can_handle(route_split) } -> std::same_as<bool>;
+        { t.handle(route_split, request) } -> std::same_as<api_response>;
     };
 #endif
 
-
     template<typename ResponseSerializer, typename... RequestHandlers>
 #if __cpp_concepts
-        requires (RequestHandlerConcept<RequestHandlers> && ...)
+        requires (RequestHandlerConcept<RequestHandlers> &&... )
 #endif
     struct request_dispatcher
     {
@@ -37,7 +42,6 @@ namespace api
             std::vector<std::string> target_split;
             boost::split(target_split, request.target(), boost::is_any_of("?"));
             boost::urls::decode_view dv {target_split.at(0)};
-            std::cout << dv;
             std::string route {dv.begin(), dv.end()};
             if (route.starts_with("/"))
             {

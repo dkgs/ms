@@ -12,9 +12,9 @@ namespace api
 {
 #if __cpp_concepts
     template<typename T>
-    concept RequestHandlerConcept = requires(T t, boost::asio::ip::tcp::socket && socket, std::shared_ptr<service::booking_service> booking_service)
+    concept RequestDispatcherConcept = requires(T t, const boost::beast::http::request<boost::beast::http::string_body> & request)
     {
-        t.operator()(std::move(socket), booking_service);
+        t.dispatch(request);
     };
 #endif
 
@@ -25,7 +25,7 @@ namespace api
      */
     template<typename RequestDispatcher>
 #if __cpp_concepts
-        //requires RequestHandlerConcept<RequestHandler>
+        requires RequestDispatcherConcept<RequestDispatcher>
 #endif
     struct connection_manager
     {
