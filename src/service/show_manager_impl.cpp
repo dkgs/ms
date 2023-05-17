@@ -45,6 +45,12 @@ namespace service
         return available_seats;
     }
 
+    std::vector<int>
+    show_manager_impl::authorized_seat_group_sizes() const
+    {
+        return {1, 2, 3, 4};
+    }
+
     bool
     show_manager_impl::book_seats(const std::vector<std::string> & seat_ids)
     {

@@ -34,6 +34,14 @@ namespace service
         fetch_available_seats(unsigned int number_of_contiguous_seats) const = 0;
 
         /**
+         * @brief Returns the authorized seat group sizes
+         * 
+         */
+        virtual
+        std::vector<int>
+        authorized_seat_group_sizes() const = 0;
+
+        /**
          * @brief Books a set of seats
          * 
          * @param seats list of seat ids to be booked
