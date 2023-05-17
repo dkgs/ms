@@ -14,11 +14,11 @@ COPY . /ms
 
 RUN mkdir docker_build && cd docker_build && conan install .. --build=missing && conan build ..
 
-FROM scratch AS image
+FROM alpine:latest AS image
 WORKDIR /ms-run
 COPY --from=builder /ms/docker_build/bin/ms .
 
-CMD ["ms", "8081"]
+CMD ["/ms-run/ms", "127.0.0.1", "8081"]
 EXPOSE 8081
 
 HEALTHCHECK --interval=30s --timeout=3s \
