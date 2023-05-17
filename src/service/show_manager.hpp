@@ -38,7 +38,7 @@ namespace service
          * 
          */
         virtual
-        std::vector<int>
+        std::vector<unsigned int>
         authorized_seat_group_sizes() const = 0;
 
         /**

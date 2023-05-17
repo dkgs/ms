@@ -18,6 +18,13 @@ namespace service
     std::vector<std::vector<model::seat>>
     show_manager_impl::fetch_available_seats(unsigned int number_of_contiguous_seats) const
     {
+        // If the asked number is not supported, return an empty vector
+        auto sizes = authorized_seat_group_sizes();
+        if (std::find(sizes.begin(),sizes.end(), number_of_contiguous_seats) == sizes.end())
+        {
+            return {};
+        }
+
         std::shared_lock<std::shared_mutex> lock {mutex_};
         if (number_of_contiguous_seats == 0 || number_of_contiguous_seats > seats_.size())
         {
@@ -45,7 +52,7 @@ namespace service
         return available_seats;
     }
 
-    std::vector<int>
+    std::vector<unsigned int>
     show_manager_impl::authorized_seat_group_sizes() const
     {
         return {1, 2, 3, 4};

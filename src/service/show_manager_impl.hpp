@@ -20,7 +20,7 @@ namespace service
         std::vector<std::vector<model::seat>>
         fetch_available_seats(unsigned int number_of_contiguous_seats) const override;
 
-        std::vector<int>
+        std::vector<unsigned int>
         authorized_seat_group_sizes() const override;
 
         bool

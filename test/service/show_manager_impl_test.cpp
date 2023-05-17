@@ -46,6 +46,18 @@ SCENARIO("classic usage of the show manager")
             }
         }
 
+        WHEN("we fetch available seats for a group number that is not supported")
+        {
+            unsigned int big_number = 999;
+            auto sizes = show_manager.authorized_seat_group_sizes();
+            REQUIRE( std::find(sizes.begin(), sizes.end(), big_number) == sizes.end() );
+            THEN("Must get an empty vector of available seats")
+            {
+                auto seat_groups = show_manager.fetch_available_seats(999);
+                REQUIRE( seat_groups.empty() );
+            }
+        }
+
         WHEN("we book three seats right in the middle")
         {
             auto seat_groups = show_manager.fetch_available_seats(3);

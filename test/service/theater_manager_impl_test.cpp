@@ -24,6 +24,12 @@ struct show_manager_mock : public show_manager
         return {};
     }
 
+    std::vector<unsigned int>
+    authorized_seat_group_sizes() const override
+    {
+        return {};
+    }
+
     bool
     book_seats(const std::vector<std::string> & seat_ids) override
     {
