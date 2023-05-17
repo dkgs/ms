@@ -1,6 +1,7 @@
 #pragma once
 
 #include "service/booking_service.hpp"
+#include "api/responses.hpp"
 
 #include <sstream>
 #include <vector>
@@ -29,20 +30,13 @@ namespace api::handler
                 (route_split.at(0).empty() || route_split.at(0) == "welcome");
         }
 
-        boost::beast::http::response<boost::beast::http::string_body>
+        api_response
         handle(const std::vector<std::string> & route_split, const boost::beast::http::request<boost::beast::http::string_body> & request)
         {
-            boost::beast::http::response<boost::beast::http::string_body> res {boost::beast::http::status::ok, request.version()};
-
-            // TODO create a great body
             auto movies = booking_service_->get_movies();
-            std::stringstream ss;
-            for (const auto & movie : movies)
-            {
-                ss << movie.name << ": " << movie.synopsis << "\n";
-            }
-            res.body() = ss.str();
-            return res;
+            return response::welcome_response{
+                .playing_movies = movies
+            };
         }
 
     private:
