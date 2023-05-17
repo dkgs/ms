@@ -2,7 +2,10 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/url/decode_view.hpp>
 #include <variant>
+
+#include <iostream>
 
 namespace api
 {
@@ -16,15 +19,15 @@ namespace api
 #endif
 
 
-    template<typename... RequestHandlers>
+    template<typename ResponseSerializer, typename... RequestHandlers>
 #if __cpp_concepts
         requires (RequestHandlerConcept<RequestHandlers> && ...)
 #endif
     struct request_dispatcher
     {
 
-        request_dispatcher(std::vector<std::variant<RequestHandlers...>> request_handlers) :
-            request_handlers_{std::move(request_handlers)}
+        request_dispatcher(ResponseSerializer && response_serializer, std::vector<std::variant<RequestHandlers...>> request_handlers) :
+            response_serializer_{std::move(response_serializer)}, request_handlers_{std::move(request_handlers)}
         {
         }
         
@@ -33,14 +36,16 @@ namespace api
         {
             std::vector<std::string> target_split;
             boost::split(target_split, request.target(), boost::is_any_of("?"));
-            std::string route = target_split.at(0);
+            boost::urls::decode_view dv {target_split.at(0)};
+            std::cout << dv;
+            std::string route {dv.begin(), dv.end()};
             if (route.starts_with("/"))
             {
                 route = route.substr(1, route.size());
             }
 
             std::vector<std::string> route_split;
-            boost::split(route_split, route, boost::is_any_of("?"));
+            boost::split(route_split, route, boost::is_any_of("/"));
 
             auto it = std::find_if(request_handlers_.begin(), request_handlers_.end(), [&route_split](std::variant<RequestHandlers...> & request_handler_variant){
                 return std::visit(
@@ -53,11 +58,17 @@ namespace api
 
             if (it != request_handlers_.end())
             {
-                return std::visit(
+                auto res_api = std::visit(
                     [&route_split, &request](auto & rh){
                         return rh.handle(route_split, request);
                     },
                     *it
+                );
+                return std::visit(
+                    [&request, &res_api, this](auto & res) {
+                        return this->response_serializer_(request, res);
+                    },
+                    res_api
                 );
             }
             else
@@ -68,6 +79,7 @@ namespace api
 
     private:
 
+        ResponseSerializer response_serializer_;
         std::vector<std::variant<RequestHandlers...>> request_handlers_;
 
     };
