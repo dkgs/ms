@@ -1,7 +1,5 @@
 #pragma once
 
-#include "service/booking_service.hpp"
-
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -11,9 +9,17 @@
 namespace api
 {
 #if __cpp_concepts
+    /**
+     * @brief RequestDispatcher concept that must be followed in order to be used in the connection manager.
+     * 
+     * @tparam T class to test against the concept.
+     */
     template<typename T>
     concept RequestDispatcherConcept = requires(T t, const boost::beast::http::request<boost::beast::http::string_body> & request)
     {
+        /**
+         * @brief Shall be able to handle the dispatchment of a request
+         */
         t.dispatch(request);
     };
 #endif
@@ -29,10 +35,13 @@ namespace api
 #endif
     struct connection_manager
     {
-
-        connection_manager(RequestDispatcher && request_dispatcher, std::shared_ptr<service::booking_service> booking_service) :
-            request_dispatcher_{std::move(request_dispatcher)},
-            booking_service_{std::move(booking_service)}
+        /**
+         * @brief Construct a new connection manager object
+         * 
+         * @param request_dispatcher dispatches incoming http request
+         */
+        connection_manager(RequestDispatcher && request_dispatcher) :
+            request_dispatcher_{std::move(request_dispatcher)}
         {}
 
         /**
@@ -69,7 +78,6 @@ namespace api
     private:
 
         RequestDispatcher request_dispatcher_;
-        std::shared_ptr<service::booking_service> booking_service_;
 
         void
         handle_request(boost::asio::ip::tcp::socket && socket)
