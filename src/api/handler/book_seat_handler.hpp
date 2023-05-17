@@ -12,8 +12,8 @@ namespace api::handler
 {
     
     /**
-     * @brief Handles the endpoint /book of the api.
-     * Books the selected seats and goes back to the welcome.
+     * @brief Handles the endpoint /book_seat of the api.
+     * Books the selected seats and goes back to the /welcome.
      * 
      */
     struct book_seat_handler

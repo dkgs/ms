@@ -11,8 +11,8 @@ namespace api::handler
 {
     
     /**
-     * @brief Handles the root endpoint of the api / or /welcome.
-     * It returns all the movies that are showed
+     * @brief Handles the health endpoint of the api /health.
+     * Permits to know if the service is still available
      * 
      */
     struct health_handler

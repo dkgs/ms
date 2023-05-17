@@ -7,6 +7,10 @@
 
 namespace api::response
 {
+    /**
+     * @brief POD for a choose_seat request
+     * 
+     */
     struct choose_seat_response
     {
         std::optional<std::string> message;

@@ -5,6 +5,10 @@
 
 namespace api::response
 {
+    /**
+     * @brief POD for a choose_theater request
+     * 
+     */
     struct choose_theater_response
     {
         std::string movie;

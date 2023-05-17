@@ -8,6 +8,10 @@
 
 namespace api::response
 {
+    /**
+     * @brief POD for the root endpoint
+     * 
+     */
     struct welcome_response
     {
         std::optional<std::string> message;

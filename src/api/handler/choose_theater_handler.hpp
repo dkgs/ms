@@ -12,8 +12,8 @@ namespace api::handler
 {
     
     /**
-     * @brief Handles the root endpoint of the api / or /welcome.
-     * It returns all the movies that are showed
+     * @brief Handles the endpoint /choose_theater of the api.
+     * Shows theaters that plays a specific movie.
      * 
      */
     struct choose_theater_handler

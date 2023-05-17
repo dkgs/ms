@@ -9,6 +9,9 @@
 
 namespace api
 {
+    /**
+     * @brief All the possibles api responses
+     */
     using api_response = std::variant<
         response::choose_seat_response,
         response::choose_theater_response,

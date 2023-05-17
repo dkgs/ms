@@ -7,7 +7,10 @@
 
 namespace api::serializer
 {
-    
+    /**
+     * @brief Serializes the api responses into HTML.
+     * 
+     */
     struct html_serializer
     {
 

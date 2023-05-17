@@ -10,20 +10,51 @@
 namespace api
 {
 #if __cpp_concepts
+    /**
+     * @brief ResponseSerializer concept serializes an api response into an http response.
+     * 
+     * @tparam T type to check against the concept
+     */
     template<typename T>
     concept ResponseSerializerConcept = requires(T & t, const api_response & res)
     {
+        /**
+         * @brief an operator() member function must be declared for each type in the
+         * api::api_response variant.
+         */
         { t(res) } -> std::same_as<boost::beast::http::response<boost::beast::http::string_body>>;
     };
 
+    /**
+     * @brief RequestHandler concept handles a specific request
+     * 
+     * @tparam T type to check against the concept
+     */
     template<typename T>
-    concept RequestHandlerConcept = requires(T & t, const std::vector<std::string> & route_split, const boost::beast::http::request<boost::beast::http::string_body> & request)
+    concept RequestHandlerConcept = requires(
+        T & t, const std::vector<std::string> & route_split,
+        const boost::beast::http::request<boost::beast::http::string_body> & request
+    )
     {
+        /**
+         * @brief Check if it is able to handle the request
+         */
         { t.can_handle(route_split) } -> std::same_as<bool>;
+        /**
+         * @brief Handles the request, can_handle must have been called before and
+         * return true as a pre-condition.
+         */
         { t.handle(route_split, request) } -> std::same_as<api_response>;
     };
 #endif
 
+    /**
+     * @brief Dispatches requests to request handlers and serializes back the responses.
+     * 
+     * @tparam ResponseSerializer serializes the responses in a specific content-type
+     * @tparam RequestHandlers... types of the handlers of the different endpoints
+     * 
+     */
     template<typename ResponseSerializer, typename... RequestHandlers>
 #if __cpp_concepts
         requires (RequestHandlerConcept<RequestHandlers> &&... )
