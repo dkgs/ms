@@ -1,6 +1,7 @@
 #include "booking_service_impl.hpp"
 
 #include <set>
+#include <algorithm>
 
 namespace service 
 {
