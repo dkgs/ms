@@ -104,6 +104,17 @@ namespace api::serializer
             return create_http_response(request, ss);
         }
 
+        boost::beast::http::response<boost::beast::http::string_body>
+        operator()(
+            const boost::beast::http::request<boost::beast::http::string_body> & request,
+            const response::health_response & response
+        )
+        {
+            std::stringstream ss;
+            ss << "{}";
+            return create_http_response(request, ss);
+        }
+
     private:
 
         void

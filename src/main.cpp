@@ -4,6 +4,7 @@
 #include "api/handler/choose_seat_handler.hpp"
 #include "api/handler/choose_theater_handler.hpp"
 #include "api/handler/root_handler.hpp"
+#include "api/handler/health_handler.hpp"
 #include "api/serializer/html_serializer.hpp"
 
 #include "service/booking_service_impl.hpp"
@@ -76,7 +77,8 @@ int main(int argc, char * argv[])
             api::handler::book_seat_handler,
             api::handler::choose_seat_handler,
             api::handler::choose_theater_handler,
-            api::handler::root_handler
+            api::handler::root_handler,
+            api::handler::health_handler
         >;
         using connection_manager_t = api::connection_manager<request_dispatcher_t>;
 
@@ -86,7 +88,8 @@ int main(int argc, char * argv[])
                 api::handler::book_seat_handler{booking_service},
                 api::handler::choose_seat_handler{booking_service},
                 api::handler::choose_theater_handler{booking_service},
-                api::handler::root_handler{booking_service}
+                api::handler::root_handler{booking_service},
+                api::handler::health_handler{}
             }
         };
         connection_manager_t cm {std::move(rd), booking_service};
