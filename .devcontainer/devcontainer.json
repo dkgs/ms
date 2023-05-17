@@ -1,0 +1,8 @@
+{
+    "image": "conanio/gcc11",
+    "forwardPorts": [8081],
+    "remoteUser": "conan",
+    "mounts": [
+        "source=${localEnv:HOME}/.conan,target=/home/conan/.conan,type=bind,consistency=cached"
+    ]
+}
