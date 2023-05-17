@@ -11,6 +11,7 @@ namespace service
 {
 
     /**
+     * @interface
      * @brief Point of entry to browse the different theatres and movies
      * 
      */

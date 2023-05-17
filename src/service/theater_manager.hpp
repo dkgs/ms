@@ -9,7 +9,11 @@
 
 namespace service 
 {
-
+    /**
+     * @interface
+     * @brief Theater manager
+     * 
+     */
     struct theater_manager
     {
 

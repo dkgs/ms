@@ -8,7 +8,11 @@
 
 namespace service 
 {
-
+    /**
+     * @interface
+     * @brief Show manager for a specific movie
+     * 
+     */
     struct show_manager
     {       
 

@@ -4,9 +4,16 @@
 
 namespace service::model
 {
-
+    /**
+     * @brief POD for a seat
+     * 
+     */
     struct seat
     {
+        /**
+         * @brief Status of a seat
+         * 
+         */
         enum class status {
             AVAILABLE, RESERVED
         };

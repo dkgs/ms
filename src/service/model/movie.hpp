@@ -5,6 +5,10 @@
 namespace service::model
 {
 
+    /**
+     * @brief POD for a movie description
+     * 
+     */
     struct movie
     {
         std::string name;
