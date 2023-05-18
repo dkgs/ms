@@ -17,7 +17,7 @@ class msRecipe(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
 
     # Sources are located in the same place as this recipe, copy them to the recipe
-    exports_sources = "CMakeLists.txt", "src/*"
+    exports_sources = "CMakeLists.txt", "src/*", "test/*"
 
     generators = "cmake", "txt"
 
@@ -32,8 +32,7 @@ class msRecipe(ConanFile):
         cmake.build()
 
     def package(self):
-        cmake = CMake(self)
-        cmake.install()
+        self.copy("ms", "bin", "bin")
 
     
 
