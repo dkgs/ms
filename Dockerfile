@@ -14,7 +14,7 @@ COPY . /ms
 
 RUN mkdir docker_build && cd docker_build && conan install .. --build=missing && conan build ..
 
-FROM alpine:latest AS image
+FROM bitnami/minideb:latest AS image
 WORKDIR /ms-run
 COPY --from=builder /ms/docker_build/bin/ms .
 
