@@ -39,9 +39,3 @@ add_test(NAME UnitTests
         COMMAND ${CMAKE_BINARY_DIR}/bin/ms_tu
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
-
-install(TARGETS ms DESTINATION "."
-        RUNTIME DESTINATION bin
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        )
