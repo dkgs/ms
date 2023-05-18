@@ -2,7 +2,16 @@
 
 Simple movie service.
 
-This movie service provides an HATEOAS style API. In order to use it directly, a CLI client is put at disposal, but any GUI can be develop on top of this service.
+This movie service provides an HATEOAS style API (actually serializes in HTML for convenience).
+
+The application is composed of two parts.
+
+The first, in the `namespace service` provides the business logic and is based on dynamic polymorphism
+because we may expect heterogeneous implementations at runtime.
+
+The second, in the `namespace api` provides an external API to discuss with the business logic. It is
+actually an HTPP REST server.
+
 
 ## Building steps
 
