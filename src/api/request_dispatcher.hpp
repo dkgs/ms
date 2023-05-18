@@ -44,7 +44,8 @@ namespace api
          * @brief Handles the request, can_handle must have been called before and
          * return true as a pre-condition.
          */
-        { t.handle(route_split, request) } -> std::same_as<api_response>;
+        { t.handle(route_split, request) };
+
     };
 #endif
 
