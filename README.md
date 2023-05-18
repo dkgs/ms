@@ -9,8 +9,10 @@ The application is composed of two parts.
 The first, in the `namespace service` provides the business logic and is based on dynamic polymorphism
 because we may expect heterogeneous implementations at runtime.
 
-The second, in the `namespace api` provides an external API to discuss with the business logic. It is
-actually an HTPP REST server.
+The second, in the `namespace api` provides an external API to discuss with the business logic and is
+base on static polymorphism.
+
+Both combined creats a REST server that is browsable by an internet navigator.
 
 
 ## Building steps
