@@ -92,7 +92,7 @@ int main(int argc, char * argv[])
                 api::handler::health_handler{}
             }
         };
-        connection_manager_t cm {std::move(rd), booking_service};
+        connection_manager_t cm {std::move(rd)};
         cm.run(argv[1], static_cast<unsigned short>(std::atoi(argv[2])));
 
     }
